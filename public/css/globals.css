@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("./mdx");
+
+:root {
+  --color-background: rgb(237, 226, 217);
+  --color-text: rgb(40, 38, 39);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
