@@ -17,8 +17,8 @@ type LinkItem = {
 export default function NavBar() {
   const links: LinkItem[] = [
     { title: "Home", icon: <RiHome3Fill />, path: "/" },
-    { title: "Works", icon: <RiBriefcase4Fill />, path: "/" },
-    { title: "Projects", icon: <RiFolder2Fill />, path: "/" },
+    { title: "Work", icon: <RiBriefcase4Fill />, path: "/work" },
+    { title: "Projects", icon: <RiFolder2Fill />, path: "/projects" },
     { icon: <RiGithubFill />, path: "https://github.com/biwchi" },
     { icon: <RiTelegram2Fill />, path: "https://t.me/biwhci" },
   ];
