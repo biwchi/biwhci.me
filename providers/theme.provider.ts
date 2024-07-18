@@ -1,6 +1,18 @@
-import { createContext, useContext, useMemo } from "react";
-type Theme = "light" | "dark";
+import type { MouseEvent } from "react";
+import { createContext, useContext } from "react";
 
-const DEFAULT_VAL = "light";
+export type Theme = "light" | "dark";
+export const DEFAULT_THEME_VAL = "light";
 
-export const ThemeProvider = createContext<Theme>(DEFAULT_VAL);
+const DEFAULT_VALUE: ThemeProvider = {
+  theme: DEFAULT_THEME_VAL,
+  toggleDark: () => {},
+};
+
+type ThemeProvider = {
+  theme: Theme;
+  toggleDark: (e: MouseEvent) => void;
+};
+
+export const ThemeContext = createContext<ThemeProvider>(DEFAULT_VALUE);
+export const useTheme = () => useContext(ThemeContext);

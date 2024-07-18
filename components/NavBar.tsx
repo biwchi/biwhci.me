@@ -1,3 +1,5 @@
+"use client";
+
 import RiHome3Fill from "~icons/ri/home-3-fill";
 import RiFolder2Fill from "~icons/ri/folder-2-fill";
 import RiBriefcase4Fill from "~icons/ri/briefcase-4-fill";
@@ -7,6 +9,8 @@ import RiMoonFill from "~icons/ri/moon-fill";
 import RiTelegram2Fill from "~icons/ri/telegram-2-fill";
 
 import AppLink from "@components/AppLink";
+
+import { useTheme } from "@/providers";
 
 type LinkItem = {
   title?: string;
@@ -32,11 +36,19 @@ export default function NavBar() {
           </AppLink>
         ))}
 
-        <button>
-          <NavBarItem icon={<RiSunFill />} />
-        </button>
+        <NavBarThemeSwitcher />
       </ul>
     </div>
+  );
+}
+
+function NavBarThemeSwitcher() {
+  const { theme, toggleDark } = useTheme();
+
+  return (
+    <button onClick={(e) => toggleDark(e)}>
+      <NavBarItem icon={theme == "light" ? <RiSunFill /> : <RiMoonFill />} />
+    </button>
   );
 }
 
