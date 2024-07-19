@@ -6,12 +6,12 @@ export const DEFAULT_THEME_VAL = "light";
 
 const DEFAULT_VALUE: ThemeProvider = {
   theme: DEFAULT_THEME_VAL,
-  toggleDark: () => {},
+  toggle: () => {},
 };
 
 type ThemeProvider = {
   theme: Theme;
-  toggleDark: (e: MouseEvent) => void;
+  toggle: (e: MouseEvent) => void;
 };
 
 export const ThemeContext = createContext<ThemeProvider>(DEFAULT_VALUE);

@@ -8,13 +8,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ThemeContext, Theme } from "@/providers";
+import { ThemeContext, Theme, DEFAULT_THEME_VAL } from "@/providers";
 
 interface ViewTransitionDocument extends Document {
   startViewTransition?: () => any;
 }
 
-const toggleDark = (
+const toggleThemeWithViewTransition = (
   current: Theme,
   set: Dispatch<SetStateAction<Theme>>,
   e: MouseEvent
@@ -29,7 +29,9 @@ const toggleDark = (
     return;
   }
 
-  const isDark = current === "dark";
+  const nextThemeValue = current === "light" ? "dark" : "light";
+  const isDark = nextThemeValue === "dark";
+
   const x = e.clientX;
   const y = e.clientY;
   const endRadius = Math.hypot(
@@ -39,17 +41,17 @@ const toggleDark = (
 
   // @ts-expect-error: Transition API
   const tranistion = doc.startViewTransition!(async () => {
-    set(current === "light" ? "dark" : "light");
+    set(nextThemeValue);
   });
 
-  tranistion.ready.then(() => {
+  tranistion.ready.then(async () => {
     const clipPath = [
       `circle(0px at ${x}px ${y}px)`,
       `circle(${endRadius}px at ${x}px ${y}px)`,
     ];
 
     document.documentElement.animate(
-      { clipPath: isDark ? [...clipPath].reverse() : clipPath },
+      { clipPath: isDark ? clipPath.reverse() : clipPath },
       {
         duration: 400,
         easing: "ease-out",
@@ -64,15 +66,10 @@ const toggleDark = (
 export default function ThemeProvider(props: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(null as unknown as Theme);
 
-  const saveTheme = (theme: Theme) => {
-    localStorage.setItem("theme", theme);
-  };
-
-  const getTheme = () => {
-    return localStorage.getItem("theme");
-  };
-
-  const toggle = (e: MouseEvent) => toggleDark(theme, setTheme, e);
+  const saveTheme = (theme: Theme) => localStorage.setItem("theme", theme);
+  const getTheme = () => localStorage.getItem("theme");
+  const toggle = (e: MouseEvent) =>
+    toggleThemeWithViewTransition(theme, setTheme, e);
 
   useEffect(() => {
     const storedTheme = getTheme();
@@ -97,7 +94,7 @@ export default function ThemeProvider(props: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider
-      value={{ theme: theme ?? "light", toggleDark: toggle }}
+      value={{ theme: theme ?? DEFAULT_THEME_VAL, toggle }}
     >
       {props.children}
     </ThemeContext.Provider>

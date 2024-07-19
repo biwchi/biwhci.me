@@ -5,8 +5,9 @@
 :root {
   --color-background: rgb(237, 226, 217);
   --color-text: rgb(40, 38, 39);
-
   --color-text-80: rgba(40, 38, 39, 0.8);
+  --color-scrollbar: rgb(219, 202, 189);
+  --color-scrollbar-hover: rgb(207, 186, 171);
 }
 
 html {
@@ -17,8 +18,28 @@ html {
 html.dark {
   --color-text: rgb(237, 226, 217);
   --color-background: rgb(40, 38, 39);
-
   --color-text-80: rgba(237, 226, 217, 0.8);
+  --color-scrollbar: rgb(30, 27, 29);
+  --color-scrollbar-hover: rgb(21, 18, 20);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: var(--color-background);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-scrollbar-hover);
 }
 
 ::view-transition-old(root),
