@@ -31,7 +31,7 @@ export default function NavBar() {
     <div className="w-full p-10">
       <ul className="flex justify-end space-x-6">
         {links.map((link) => (
-          <AppLink key={link.title} to={link.path}>
+          <AppLink key={link.path} to={link.path}>
             <NavBarItem {...link} />
           </AppLink>
         ))}
@@ -43,10 +43,10 @@ export default function NavBar() {
 }
 
 function NavBarThemeSwitcher() {
-  const { theme, toggleDark } = useTheme();
+  const { theme, toggle } = useTheme();
 
   return (
-    <button onClick={(e) => toggleDark(e)}>
+    <button onClick={(e) => toggle(e)}>
       <NavBarItem icon={theme == "light" ? <RiSunFill /> : <RiMoonFill />} />
     </button>
   );
