@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 
 import NavBar from "@/components/NavBar";
 import ThemeProvider from "@/components/ThemeProvider";
+import LeafArt from "@/components/LeafArt";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeSetter }}></script>
 
         <ThemeProvider>
+          <LeafArt />
           <NavBar />
           <main className="flex max-w-screen-sm mx-auto">{children}</main>
         </ThemeProvider>

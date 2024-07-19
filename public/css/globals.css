@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --color-background: rgb(237, 226, 217);
+  --color-background: #ede2d9;
   --color-text: rgb(40, 38, 39);
   --color-text-80: rgba(40, 38, 39, 0.8);
   --color-scrollbar: rgb(219, 202, 189);
@@ -17,7 +17,7 @@ html {
 
 html.dark {
   --color-text: rgb(237, 226, 217);
-  --color-background: rgb(40, 38, 39);
+  --color-background: #282627;
   --color-text-80: rgba(237, 226, 217, 0.8);
   --color-scrollbar: rgb(30, 27, 29);
   --color-scrollbar-hover: rgb(21, 18, 20);

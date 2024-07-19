@@ -3,7 +3,6 @@ import createMdx from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   webpack(config) {
     config.plugins.push(
