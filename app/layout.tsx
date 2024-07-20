@@ -36,8 +36,13 @@ export default function RootLayout({
 
         <ThemeProvider>
           <LeafArt />
-          <NavBar />
-          <main className="flex max-w-screen-sm mx-auto">{children}</main>
+
+          <div className='relative z-10'>
+            <NavBar />
+            <main className="flex max-w-screen-sm mx-auto">
+              {children}
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
