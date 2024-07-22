@@ -3,7 +3,9 @@
 import { useTheme } from "@/providers";
 import { p5i, P5I } from "p5i";
 import { useEffect, useRef } from "react";
-import LEAF_IMAGE from "@/public/leaf.svg";
+
+import LEAF_IMAGE_DARK from "@/public/leaf_dark.png";
+import LEAF_IMAGE_LIGHT from "@/public/leaf_light.png";
 
 type Rotation = {
   axis: "x" | "y" | "z";
@@ -37,7 +39,7 @@ const LEAF_COUNT = 40;
 
 const default_wind = {
   magnitude: 8,
-  maxSpeed: 12,
+  maxSpeed: 10,
   minSpeed: 4,
   duration: 100,
   start: 0,
@@ -58,6 +60,7 @@ export default function LeafArt() {
     sin,
     noStroke,
     image,
+    resizeCanvas,
     loadImage,
     CENTER,
     imageMode,
@@ -69,20 +72,23 @@ export default function LeafArt() {
   const el = useRef<HTMLDivElement | null>(null);
 
   const color = theme === "dark" ? DARK_COLOR : LIGHT_COLOR;
-  const w = innerWidth;
-  const h = innerHeight;
-  const leafImage = useRef<any>();
+
+  const w = useRef(innerWidth);
+  const h = useRef(innerHeight);
+
+  const leafLight = useRef<any>();
+  const leafDark = useRef<any>();
 
   const leaves = useRef<Leaf[]>([]);
   const wind = useRef<Wind>(default_wind);
 
   function resetLeaf(leaf: Leaf, frameCount = 0) {
-    leaf.x = -w / 2 - Math.random() * w * 1.75;
-    leaf.y = -h / 2;
+    leaf.x = -w.current / 2 - Math.random() * w.current * 1.75;
+    leaf.y = -h.current / 2;
     leaf.z = Math.random() * 100 + 50;
 
     if (frameCount === 0) {
-      leaf.y = (Math.random() * h) / 2;
+      leaf.y = (Math.random() * h.current) / 2;
     }
 
     leaf.ySpeed = Math.random() + 1.5;
@@ -111,7 +117,7 @@ export default function LeafArt() {
     leaf.y += leaf.ySpeed;
     leaf.rotation.value += leaf.rotation.speed;
 
-    if (leaf.x > w / 2 + 10 || leaf.y > h / 2 + 10) {
+    if (leaf.x > w.current / 2 + 10 || leaf.y > h.current / 2 + 10) {
       resetLeaf(leaf, frameCount);
     }
   }
@@ -129,7 +135,9 @@ export default function LeafArt() {
     wind.current.start = frameCount;
 
     wind.current.speed = (frameCount: number, y: number) => {
-      const a = ((wind.current.magnitude / 2) * (h - (2 * (y / 2)) / 3)) / h;
+      const a =
+        ((wind.current.magnitude / 2) * (h.current - (2 * (y / 2)) / 3)) /
+        h.current;
 
       const asin = sin(
         degrees(((2 * PI) / wind.current.duration) * frameCount + (3 * PI) / 2)
@@ -162,7 +170,7 @@ export default function LeafArt() {
   }
 
   function setup() {
-    createCanvas(w, h, WEBGL);
+    createCanvas(w.current, h.current, WEBGL);
     background(color);
     noStroke();
     imageMode(CENTER);
@@ -183,6 +191,7 @@ export default function LeafArt() {
   }: P5I) {
     background(color);
     updateWind(frameCount);
+    const leafAsset = theme !== "dark" ? leafDark.current : leafLight.current;
 
     leaves.current.forEach((leaf) => {
       updateLeaf(leaf, frameCount);
@@ -204,7 +213,7 @@ export default function LeafArt() {
         rotateZ(leaf.rotation.value);
       }
 
-      image(leafImage.current, 0, 0, w, h);
+      image(leafAsset, 0, 0, w, h);
 
       pop();
     });
@@ -222,9 +231,8 @@ export default function LeafArt() {
       setup,
       draw,
       preload: () => {
-        leafImage.current = loadImage(
-          "https://s3-us-west-2.amazonaws.com/s.cdpn.io/125707/leaf.svg"
-        );
+        leafLight.current = loadImage(LEAF_IMAGE_LIGHT.src);
+        leafDark.current = loadImage(LEAF_IMAGE_DARK.src);
       },
     });
   }
@@ -232,8 +240,16 @@ export default function LeafArt() {
   useEffect(() => {
     restart();
 
+    window.addEventListener("resize", () => {
+      w.current = innerWidth;
+      h.current = innerHeight;
+
+      resizeCanvas(w.current, h.current);
+    });
+
     return () => {
       unmount();
+      window.removeEventListener("resize", () => {});
     };
   }, []);
 
