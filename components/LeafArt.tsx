@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 
 import LEAF_IMAGE_DARK from "@/public/leaf_dark.png";
 import LEAF_IMAGE_LIGHT from "@/public/leaf_light.png";
+import { useWindowSize } from "@/hooks";
 
 type Rotation = {
   axis: "x" | "y" | "z";
@@ -46,9 +47,26 @@ const default_wind = {
   speed: () => 0,
 };
 
+const default_leaf: Leaf = {
+  x: 0,
+  y: 0,
+  z: 0,
+  prevXSpeed: 0,
+  ySpeed: 0,
+  xSpeedVariation: 0,
+  rotation: {
+    x: 0,
+    speed: 0,
+    value: 0,
+    axis: "x",
+  },
+};
+
 export default function LeafArt() {
   const p5iRef = useRef<P5I>(p5i());
   const { theme } = useTheme();
+  const { width } = useWindowSize();
+
   const {
     mount,
     unmount,
@@ -71,8 +89,8 @@ export default function LeafArt() {
 
   const el = useRef<HTMLDivElement | null>(null);
 
-  const color = theme === "dark" ? DARK_COLOR : LIGHT_COLOR;
-
+  const color = useRef(theme === "dark" ? DARK_COLOR : LIGHT_COLOR);
+  const leafCount = useRef(LEAF_COUNT);
   const w = useRef(innerWidth);
   const h = useRef(innerHeight);
 
@@ -148,22 +166,8 @@ export default function LeafArt() {
   }
 
   function createLeaves() {
-    Array.from({ length: LEAF_COUNT }).forEach((_, idx) => {
-      const leaf: Leaf = {
-        x: 0,
-        y: 0,
-        z: 0,
-        prevXSpeed: 0,
-        ySpeed: 0,
-        xSpeedVariation: 0,
-        rotation: {
-          x: 0,
-          speed: 0,
-          value: 0,
-          axis: "x",
-        },
-      };
-
+    Array.from({ length: leafCount.current }).forEach((_, idx) => {
+      const leaf = { ...default_leaf, rotation: { ...default_leaf.rotation } };
       resetLeaf(leaf);
       leaves.current.push(leaf);
     });
@@ -171,7 +175,7 @@ export default function LeafArt() {
 
   function setup() {
     createCanvas(w.current, h.current, WEBGL);
-    background(color);
+    background(color.current);
     noStroke();
     imageMode(CENTER);
     angleMode(DEGREES);
@@ -189,7 +193,7 @@ export default function LeafArt() {
     push,
     pop,
   }: P5I) {
-    background(color);
+    background(color.current);
     updateWind(frameCount);
     const leafAsset = theme !== "dark" ? leafDark.current : leafLight.current;
 
@@ -217,6 +221,8 @@ export default function LeafArt() {
 
       pop();
     });
+
+    // clear unsed leaves
   }
 
   function restart() {
@@ -254,8 +260,47 @@ export default function LeafArt() {
   }, []);
 
   useEffect(() => {
-    restart();
+    color.current = theme === "dark" ? DARK_COLOR : LIGHT_COLOR;
   }, [theme]);
+
+  useEffect(() => {
+    if (width < 768) {
+      wind.current.maxSpeed = 5;
+    } else {
+      wind.current.maxSpeed = 10;
+    }
+
+    const prevLeafCount = leafCount.current;
+
+    if (width < 768 && width > 450) {
+      leafCount.current = 20;
+    } else if (width < 450) {
+      leafCount.current = 10;
+    } else {
+      leafCount.current = LEAF_COUNT;
+    }
+
+    if (prevLeafCount == leafCount.current) {
+      return;
+    }
+
+    if (prevLeafCount > leafCount.current) {
+      const diff = prevLeafCount - leafCount.current;
+      leaves.current.splice(0, diff);
+    } else {
+      const diff = leafCount.current - prevLeafCount;
+
+      Array.from({ length: diff }).forEach((_, idx) => {
+        const leaf = {
+          ...default_leaf,
+          rotation: { ...default_leaf.rotation },
+        };
+
+        resetLeaf(leaf);
+        leaves.current.push(leaf);
+      });
+    }
+  }, [width]);
 
   return (
     <div ref={el} className="fixed -z-[1] inset-0 pointer-events-none"></div>
