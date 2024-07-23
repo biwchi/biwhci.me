@@ -14,6 +14,9 @@ const config: Config = {
         "text-80": "var(--color-text-80)",
         background: "var(--color-background)",
       },
+      screens: {
+        xs: "400px",
+      },
     },
   },
   plugins: [],
