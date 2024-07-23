@@ -39,7 +39,7 @@ export default function RootLayout({
 
           <div className='relative z-10'>
             <NavBar />
-            <main className="flex max-w-screen-sm mx-auto">
+            <main className="flex px-5 max-w-screen-sm mx-auto">
               {children}
             </main>
           </div>
