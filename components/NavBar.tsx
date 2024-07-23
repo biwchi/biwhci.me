@@ -11,6 +11,7 @@ import RiTelegram2Fill from "~icons/ri/telegram-2-fill";
 import AppLink from "@components/AppLink";
 
 import { useTheme } from "@/providers";
+import { useWindowSize } from "@/hooks";
 
 type LinkItem = {
   title?: string;
@@ -19,6 +20,8 @@ type LinkItem = {
 };
 
 export default function NavBar() {
+  const { width } = useWindowSize();
+
   const links: LinkItem[] = [
     { title: "Home", icon: <RiHome3Fill />, path: "/" },
     { title: "Work", icon: <RiBriefcase4Fill />, path: "/work" },
@@ -28,11 +31,11 @@ export default function NavBar() {
   ];
 
   return (
-    <div className="w-full p-10">
+    <div className="w-full p-4 py-6 xs:p-10">
       <ul className="flex justify-end space-x-6">
         {links.map((link) => (
           <AppLink key={link.path} to={link.path}>
-            <NavBarItem {...link} />
+            <NavBarItem {...link} small={width < 768} />
           </AppLink>
         ))}
 
@@ -52,15 +55,15 @@ function NavBarThemeSwitcher() {
   );
 }
 
-function NavBarItem(props: Omit<LinkItem, "path">) {
-  const { icon, title } = props;
+function NavBarItem(props: Omit<LinkItem, "path"> & { small?: boolean }) {
+  const { icon, title, small } = props;
 
   return (
     <div className="flex gap-1 h-full relative items-center group opacity-70 transition hover:opacity-100">
       <div className="absolute opacity-0 group-hover:opacity-20 w-full transition-opacity h-[calc(100%-1rem)] left-0 top-1/2 -translate-y-1/2 bg-text rounded-full blur-lg -z-10"></div>
 
       <span className={title ? "" : "text-xl"}>{icon}</span>
-      {title}
+      {!small && title}
     </div>
   );
 }

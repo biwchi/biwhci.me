@@ -29,12 +29,12 @@ function WorkCard(props: WorkCardProps) {
 
   return (
     <section className="rounded-md">
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between">
         <span>{location}</span>
         <DatePeriod started={started} ended={ended} />
       </div>
 
-      <div className="flex gap-1 mt-1 font-semibold">
+      <div className="flex gap-1 mt-2 xs:mt-1 flex-wrap whitespace-nowrap font-semibold">
         <h3 className="font-semibold">{position}</h3>
         <span className="text-text-80">at</span>
         <h3 className="font-semibold">{company}</h3>
