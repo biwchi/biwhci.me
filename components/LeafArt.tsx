@@ -195,7 +195,8 @@ export default function LeafArt() {
   }: P5I) {
     background(color.current);
     updateWind(frameCount);
-    const leafAsset = theme !== "dark" ? leafDark.current : leafLight.current;
+    const leafAsset =
+      color.current !== DARK_COLOR ? leafDark.current : leafLight.current;
 
     leaves.current.forEach((leaf) => {
       updateLeaf(leaf, frameCount);
