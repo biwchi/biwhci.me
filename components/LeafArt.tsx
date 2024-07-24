@@ -1,12 +1,12 @@
 "use client";
 
+import { useWindowSize } from "@/hooks";
 import { useTheme } from "@/providers";
 import { p5i, P5I } from "p5i";
 import { useEffect, useRef } from "react";
 
 import LEAF_IMAGE_DARK from "@/public/leaf_dark.png";
 import LEAF_IMAGE_LIGHT from "@/public/leaf_light.png";
-import { useWindowSize } from "@/hooks";
 
 type Rotation = {
   axis: "x" | "y" | "z";
@@ -91,8 +91,9 @@ export default function LeafArt() {
 
   const color = useRef(theme === "dark" ? DARK_COLOR : LIGHT_COLOR);
   const leafCount = useRef(LEAF_COUNT);
-  const w = useRef(innerWidth);
-  const h = useRef(innerHeight);
+  
+  const w = useRef(innerWidth ?? 0);
+  const h = useRef(innerHeight ?? 0);
 
   const leafLight = useRef<any>();
   const leafDark = useRef<any>();
@@ -256,6 +257,7 @@ export default function LeafArt() {
 
     return () => {
       unmount();
+
       window.removeEventListener("resize", () => {});
     };
   }, []);

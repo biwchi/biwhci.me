@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { IS_SERVER } from "@/utils";
+import { useRef, useSyncExternalStore } from "react";
 
 type Size = {
   width: number;
   height: number;
 };
-
-const IS_SERVER = typeof window === "undefined";
 
 export function useWindowSize() {
   const prevSize = useRef<Size>({
@@ -26,18 +25,18 @@ export function useWindowSize() {
   };
 
   const subscribe = (cb: () => void) => {
-    if (!IS_SERVER) {
-      window.addEventListener("resize", cb);
-    }
+    window.addEventListener("resize", cb);
 
     return () => {
-      if (!IS_SERVER) {
-        window.removeEventListener("resize", cb);
-      }
+      window.removeEventListener("resize", cb);
     };
   };
 
   const getSnapshot = () => {
+    if (IS_SERVER()) {
+      return prevSize.current;
+    }
+
     const current: Size = {
       width: window.innerWidth,
       height: window.innerHeight,

@@ -7,10 +7,15 @@ import LeafArt from "@/components/LeafArt";
 
 import { AppProps } from "next/app";
 import { Metadata } from "next";
+import { IS_SERVER } from "@/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
 function setTheme() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   const prefersDark =
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches;
