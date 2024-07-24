@@ -31,17 +31,10 @@ type Props = {
 } & AppProps<{ meta?: Metadata }>;
 
 export default function RootLayout(props: Props) {
-  const { children, pageProps } = props;
-  console.log(props, 'EBLAN')
+  const { children } = props;
 
-  const title = pageProps?.meta?.title as string ?? "Biwchi";
   return (
     <html lang="en">
-      <head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-
       <body className={inter.className}>
         <script dangerouslySetInnerHTML={{ __html: themeSetter }}></script>
 

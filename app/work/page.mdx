@@ -1,36 +1,62 @@
+---
+metadata: 
+  title: Biwchi's works
+  description: Biwchi's employment history
+
+cards: 
+  - location: Saratov, Russia (remote)
+    company: Sotnikov Studio
+    position: Front-end developer
+    started: 2024-02-05
+    description: 
+      - Sotnikov Studio specializes in complex IT projects, including CRM systems, web applications, websites, and corporate portals. They create high-quality, adaptive web products and custom business analytics systems, integrating third-party services. They handle MVP development within budget and enhance functionality post-launch.Staying  updated with tech trends, they deliver efficient, high-performing products.
+      - I received an excellent offer from Sotnikov Studio while job hunting and accepted it within a few days. I began working on a new project, a large CRM system similar to Bitrix24, alongside a team of new hires. Additionally, I occasionally contributed to other projects as needed.
+    skills: 
+      - TypeScript
+      - JavaScript
+      - Nuxt
+      - Vue
+      - Next.js
+      - React
+      - TailwindCSS
+      - HTML
+      - CSS
+      - PM2
+      - Git
+      - GitHub
+      - Swagger
+  - location: Atyrau, Kazakhstan
+    company: MERIS Digital Solutions
+    position: Front-end developer
+    started: 2022-10-06
+    ended: 2023-12-21
+    description: 
+      - MERIS Digital Solutions specializes in integrating digital products for financial companies. They develop software for automating tasks and business processes, offer outstaffing and outsourcing services, and provide digitalization consultancy. With expertise in the oil and gas sector and experience with geographic information systems, they assist in organizing and controlling workflows.
+      - Meris Digital Solutions was my first job, where I worked on several projects alongside a great team. I developed dashboards and an online accounting system that stored all financial information for the company. These projects were designed to help streamline business operations and improve efficiency.
+    skills: 
+      - TypeScript
+      - JavaScript
+      - Nest.js
+      - Nuxt
+      - Vue
+      - React
+      - TailwindCSS
+      - HTML
+      - CSS
+      - Git
+      - Java
+      - Node.js
+      - PostgreSQL
+      - SCSS
+      - DOCKER
+      - Gitlab
+      - RESTful APis
+      - Swagger
+---
+
 import WorkCards from '@components/WorkCards'
 
-export const meta = {
-  title: 'Biwchi\'s works'
-}
-
-export const cards = [
-  {
-    location: "Saratov, Russia (remote)",
-    company: "Sotnikov Studio",
-    position: "Front-end developer",
-    started: "2024-02-05",
-    description: [
-      "Sotnikov Studio specializes in complex IT projects, including CRM systems, web applications, websites, and corporate portals. They create high-quality, adaptive web products and custom business analytics systems, integrating third-party services. They handle MVP development within budget and enhance functionality post-launch. Staying updated with tech trends, they deliver efficient, high-performing products.",
-
-      'I received an excellent offer from Sotnikov Studio while job hunting and accepted it within a few days. I began working on a new project, a large CRM system similar to Bitrix24, alongside a team of new hires. Additionally, I occasionally contributed to other projects as needed.'
-    ],
-    skills: ['TypeScript', 'JavaScript', "Nuxt", 'Vue', 'Next.js', 'React', 'TailwindCSS', 'HTML', 'CSS', 'PM2', 'Git', 'GitHub', 'Swagger'],
-  },
-  {
-    location: "Atyrau, Kazakhstan",
-    company: "MERIS Digital Solutions",
-    position: "Front-end developer",
-    started: "2022-10-06",
-    ended: "2023-12-21",
-    description: [
-      "MERIS Digital Solutions specializes in integrating digital products for financial companies. They develop software for automating tasks and business processes, offer outstaffing and outsourcing services, and provide digitalization consultancy. With expertise in the oil and gas sector and experience with geographic information systems, they assist in organizing and controlling workflows.",
-
-      "Meris Digital Solutions was my first job, where I worked on several projects alongside a great team. I developed dashboards and an online accounting system that stored all financial information for the company. These projects were designed to help streamline business operations and improve efficiency."
-    ],
-    skills: ['TypeScript', 'JavaScript', 'Nest.js', 'React', 'Java', 'Vue', 'Nuxt', 'Node.js', 'TailwindCSS', 'PostgreSQL', 'SCSS', 'DOCKER', 'HTML', 'CSS', 'Git', 'GitLab', 'RESTful APis', "Swagger"],
-  }
-]
+export const metadata = frontmatter.metadata
 
 ## Employment history
 
@@ -38,4 +64,4 @@ Discover my professional journey in web development. From creating dynamic web a
 
 ---
 
-<WorkCards cards={cards}/>
+<WorkCards cards={frontmatter.cards}/>
