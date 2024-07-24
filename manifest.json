@@ -1,0 +1,14 @@
+{
+  "name": "Biwchi's portfolio",
+  "short_name": "Biwchi",
+  "start_url": "./",
+  "display": "standalone",
+  "description": "A personal portfolio website built with Next.js and TypeScript.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
