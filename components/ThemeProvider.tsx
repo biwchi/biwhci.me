@@ -9,6 +9,8 @@ import {
   useState,
 } from "react";
 import { ThemeContext, Theme, DEFAULT_THEME_VAL } from "@/providers";
+import { useCookies } from "react-cookie";
+// import { cookies } from "next/headers";
 
 interface ViewTransitionDocument extends Document {
   startViewTransition?: () => any;
@@ -65,9 +67,10 @@ const toggleThemeWithViewTransition = (
 
 export default function ThemeProvider(props: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(null as unknown as Theme);
+  const [cookie, setCookie] = useCookies();
 
-  const saveTheme = (theme: Theme) => localStorage.setItem("theme", theme);
-  const getTheme = () => localStorage.getItem("theme");
+  const saveTheme = (theme: Theme) => setCookie("theme", theme);
+  const getTheme = () => cookie.theme;
   const toggle = (e: MouseEvent) =>
     toggleThemeWithViewTransition(theme, setTheme, e);
 

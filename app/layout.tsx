@@ -8,6 +8,7 @@ import { AppProps } from "next/app";
 import { Metadata } from "next";
 
 import dynamic from "next/dynamic";
+import { cookies } from 'next/headers';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +17,13 @@ function setTheme() {
     return;
   }
 
+  const cookie = cookies()
   const prefersDark =
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches;
   const setting =
-    localStorage.getItem("theme") || (prefersDark ? "dark" : "light");
-
+    cookie.get("theme")?.value || (prefersDark ? "dark" : "light");
+  console.log(setting)
   if (setting === "dark" || (prefersDark && setting !== "light")) {
     document.documentElement.classList.toggle("dark", true);
   }
