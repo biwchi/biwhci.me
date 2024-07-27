@@ -6,6 +6,7 @@ import ThemeProvider from "@/components/ThemeProvider";
 
 import { AppProps } from "next/app";
 import { Metadata } from "next";
+
 import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });

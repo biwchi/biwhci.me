@@ -22,7 +22,7 @@ const toggleThemeWithViewTransition = (
   const doc = document as ViewTransitionDocument;
   const isAppearanceTransition =
     doc.startViewTransition &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!isAppearanceTransition) {
     set(current === "light" ? "dark" : "light");
