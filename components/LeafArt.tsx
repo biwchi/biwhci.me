@@ -91,9 +91,9 @@ export default function LeafArt() {
 
   const color = useRef(theme === "dark" ? DARK_COLOR : LIGHT_COLOR);
   const leafCount = useRef(LEAF_COUNT);
-  
-  const w = useRef(innerWidth ?? 0);
-  const h = useRef(innerHeight ?? 0);
+
+  const w = useRef(innerWidth);
+  const h = useRef(innerHeight);
 
   const leafLight = useRef<any>();
   const leafDark = useRef<any>();

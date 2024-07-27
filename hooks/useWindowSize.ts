@@ -25,10 +25,14 @@ export function useWindowSize() {
   };
 
   const subscribe = (cb: () => void) => {
-    window.addEventListener("resize", cb);
+    if (!IS_SERVER()) {
+      globalThis.window.addEventListener("resize", cb);
+    }
 
     return () => {
-      window.removeEventListener("resize", cb);
+      if (!IS_SERVER()) {
+        globalThis.window.removeEventListener("resize", cb);
+      }
     };
   };
 
@@ -38,8 +42,8 @@ export function useWindowSize() {
     }
 
     const current: Size = {
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: globalThis.window.innerWidth,
+      height: globalThis.window.innerHeight,
     };
 
     if (!isEqual(prevSize.current, current)) {

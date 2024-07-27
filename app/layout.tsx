@@ -3,11 +3,10 @@ import { Inter } from "next/font/google";
 
 import NavBar from "@/components/NavBar";
 import ThemeProvider from "@/components/ThemeProvider";
-import LeafArt from "@/components/LeafArt";
 
 import { AppProps } from "next/app";
 import { Metadata } from "next";
-import { IS_SERVER } from "@/utils";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +30,8 @@ const themeSetter = `
   ${setTheme}()
 `;
 
+const Art = dynamic(() => import("@/components/LeafArt"), { ssr: false });
+
 type Props = {
   children: React.ReactNode;
 } & AppProps<{ meta?: Metadata }>;
@@ -44,7 +45,7 @@ export default function RootLayout(props: Props) {
         <script dangerouslySetInnerHTML={{ __html: themeSetter }}></script>
 
         <ThemeProvider>
-          <LeafArt />
+          <Art />
 
           <div className="relative z-10">
             <NavBar />
