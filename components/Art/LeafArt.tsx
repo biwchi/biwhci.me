@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 
 import LEAF_IMAGE_DARK from "@/public/leaf_dark.png";
 import LEAF_IMAGE_LIGHT from "@/public/leaf_light.png";
+import { DARK_COLOR, LIGHT_COLOR } from "./const";
 
 type Rotation = {
   axis: "x" | "y" | "z";
@@ -34,8 +35,6 @@ type Wind = {
   speed: (t: number, y: number) => number;
 };
 
-const DARK_COLOR = "#282627";
-const LIGHT_COLOR = "#ede2d9";
 const LEAF_COUNT = 40;
 
 const default_wind = {

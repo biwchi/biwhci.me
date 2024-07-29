@@ -10,7 +10,13 @@ import { cookies } from "next/headers";
 import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
-const Art = dynamic(() => import("@/components/LeafArt"), {
+
+const LeafArt = dynamic(() => import("@/components/Art/LeafArt"), {
+  ssr: false,
+  loading: () => <div></div>,
+});
+
+const MeteorArt = dynamic(() => import("@/components/Art/MeteorArt"), {
   ssr: false,
   loading: () => <div></div>,
 });
@@ -29,7 +35,7 @@ export default function RootLayout(props: Props) {
     <html lang="en" className={theme?.value === "dark" ? "dark" : ""}>
       <body className={inter.className}>
         <ThemeProvider>
-          <Art />
+          <MeteorArt />
 
           <div className="relative z-10">
             <NavBar />
