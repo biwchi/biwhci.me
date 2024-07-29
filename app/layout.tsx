@@ -10,7 +10,10 @@ import { cookies } from "next/headers";
 import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
-const Art = dynamic(() => import("@/components/LeafArt"), { ssr: false });
+const Art = dynamic(() => import("@/components/LeafArt"), {
+  ssr: false,
+  loading: () => <div></div>,
+});
 
 type Props = {
   children: React.ReactNode;
