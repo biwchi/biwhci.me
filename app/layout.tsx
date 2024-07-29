@@ -3,36 +3,13 @@ import { Inter } from "next/font/google";
 
 import NavBar from "@/components/NavBar";
 import ThemeProvider from "@/components/ThemeProvider";
+import dynamic from "next/dynamic";
 
 import { AppProps } from "next/app";
+import { cookies } from "next/headers";
 import { Metadata } from "next";
 
-import dynamic from "next/dynamic";
-import { cookies } from 'next/headers';
-
 const inter = Inter({ subsets: ["latin"] });
-
-function setTheme() {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  const cookie = cookies()
-  const prefersDark =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const setting =
-    cookie.get("theme")?.value || (prefersDark ? "dark" : "light");
-  console.log(setting)
-  if (setting === "dark" || (prefersDark && setting !== "light")) {
-    document.documentElement.classList.toggle("dark", true);
-  }
-}
-
-const themeSetter = `
-  ${setTheme}()
-`;
-
 const Art = dynamic(() => import("@/components/LeafArt"), { ssr: false });
 
 type Props = {
@@ -42,11 +19,12 @@ type Props = {
 export default function RootLayout(props: Props) {
   const { children } = props;
 
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <script dangerouslySetInnerHTML={{ __html: themeSetter }}></script>
+  const cookie = cookies();
+  const theme = cookie.get("theme");
 
+  return (
+    <html lang="en" className={theme?.value === "dark" ? "dark" : ""}>
+      <body className={inter.className}>
         <ThemeProvider>
           <Art />
 
