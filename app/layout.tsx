@@ -35,7 +35,7 @@ export default function RootLayout(props: Props) {
     <html lang="en" className={theme?.value === "dark" ? "dark" : ""}>
       <body className={inter.className}>
         <ThemeProvider>
-          <MeteorArt />
+          <LeafArt />
 
           <div className="relative z-10">
             <NavBar />
